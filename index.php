@@ -1,10 +1,11 @@
 <?php 
+
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
-    $user = $_POST['username'];
-    $mail = $_POST['email'];
-    $phone = $_POST['phone'];
-    $msg   = $_POST['message'];
+    $user = filter_var($_POST['username'], FILTER_SANITIZE_STRING) ;
+    $mail = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL)  ;
+    $phone =  filter_var($_POST['phone'], FILTER_SANITIZE_NUMBER_INT)   ;
+    $msg   =  filter_var($_POST['message'], FILTER_SANITIZE_STRING)  ;
     $formErrors =array();  
  
     if (strlen($user) <= 3 or strlen($user)> 20){
@@ -42,7 +43,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         <!-- start Form-->
        <form class="contact-form" action="<?php echo $_SERVER ['PHP_SELF']?>" method="POST">
        <?php 
-            if (isset($formErrors)){?>
+            if (! empty ($formErrors)){?>
        
        <div class="alert alert-danger d-flex align-items-center alert-dismissible" role="alert">
        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -57,28 +58,37 @@ if($_SERVER['REQUEST_METHOD']=='POST')
             </div>
         </div>
         <?php   }?>
+        <div classs ="form-group">
             <input 
                 type="text" 
                 name="username" 
                 class="form-control"  
-                placeholder="Type Your Username">
+                placeholder="Type Your Username"
+                value="<?php if(isset($user)) {echo $user;} ?>">
                 <i class="fa-solid fa-user fa-fw"></i>
-            <input 
+                <span class="astrisk">*</span>
+        </div>
+        <div classs ="form-group">
+            <input  
                 type="email"
                 name="email" 
                 class="form-control" 
-                placeholder="Please Type a Valid Email">
+                placeholder="Please Type a Valid Email"
+                value="<?php if(isset($mail)) {echo $mail;} ?>">
                 <i class="fa-solid fa-envelope fa-fw"></i>
+                <span class="astrisk">*</span>
+        </div>
             <input 
                 type="tel" 
                 name="phone" 
                 class="form-control" 
-                placeholder="Please Type Your Telephone Number">
+                placeholder="Please Type Your Telephone Number"
+                value="<?php if(isset($phone)) {echo $phone;} ?>">
                 <i class="fa-solid fa-square-phone fa-fw"></i>
             <textarea 
                 class="form-control"
                 name="message"
-                placeholder="Write Your Message Here....."></textarea>
+                placeholder="Write Your Message Here....."><?php if(isset($msg)) {echo $msg;} ?></textarea>
             <input 
                 type="submit" 
                 value="Send Message" 

@@ -13,6 +13,11 @@ h1{
     max-width: 450px;
     margin: 30px auto;
 }
+.contact-form .form-group {
+    margin-bottom: -24px;
+    position: relative;
+
+}
 .contact-form input,
 .contact-form textarea {
     margin-bottom: 10px;
@@ -45,6 +50,15 @@ h1{
     left: 10px;
     color: white ;
     
+}
+.astrisk {
+    float: right;
+    height: 0;
+    color: #f00;
+    font-size: 22px;
+    position: relative;
+    right: 7px;
+    top: -51px;
 }
 .alert{
     --bs-alert-margin-bottom: 10px;
